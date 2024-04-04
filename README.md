@@ -34,33 +34,3 @@ Die `requirements.txt` enthält alle notwendigen Python-Pakete, einschließlich:
 3. **Ausführen des Skripts:** Starte das Skript, um die GeoJSON-Datei zu segmentieren und die JSON-Karte zu generieren.
 
 Das Ergebnis sind mehrere kleinere GeoJSON-Dateien im `segments`-Ordner und eine `map.json`, die die Segmentdateien mit den Koordinatenbereichen verknüpft.
-
----
-
-berprüfen der Koordinaten und der total_bounds
-Das Problem könnte daran liegen, dass die total_bounds der vollständigen Datendatei nicht korrekt berechnet oder interpretiert werden. Es ist wichtig sicherzustellen, dass die Koordinaten in der vollständigen Datei im erwarteten Format und Bereich sind. Manchmal können extrem große oder kleine Werte (Ausreißer) in den Daten die Berechnung der total_bounds beeinflussen.
-
-Lösungsansatz:
-Prüfe die total_bounds der vollständigen Datendatei, um sicherzustellen, dass sie sinnvoll sind.
-Untersuche die Daten auf mögliche Ausreißer, die die Berechnungen beeinflussen könnten.
-2. Anpassung der GRID_SIZE
-Wenn die GRID_SIZE im Verhältnis zu den total_bounds der vollständigen Datendatei zu klein ist, könnte das dazu führen, dass die Daten nicht wie erwartet aufgeteilt werden.
-
-Lösungsansatz:
-Experimentiere mit verschiedenen Werten für GRID_SIZE, um eine passendere Aufteilung zu finden. Es kann sein, dass du für die vollständige Datendatei eine größere GRID_SIZE benötigst.
-3. Überprüfung der Filterlogik
-Die Logik, die bestimmt, welche Datenpunkte in welches Segment gehören, könnte fehlerhaft sein oder nicht wie erwartet mit den vollständigen Daten funktionieren.
-
-Lösungsansatz:
-Stelle sicher, dass die Filterlogik korrekt implementiert ist. Insbesondere sollte die Überprüfung, ob ein Punkt innerhalb der Bounding Box eines Segments liegt, korrekt sein.
-Überprüfe, ob die intersects-Methode von Geopandas wie erwartet funktioniert, indem du manuell einige Punkte testest.
-4. Räumliche Indexierung
-Für sehr große Datensätze kann die Verwendung eines räumlichen Index die Effizienz der Operationen verbessern.
-
-Lösungsansatz:
-Überlege, ob du einen räumlichen Index für deine GeoDataFrame vor der Filteroperation hinzufügen kannst, um die Leistung zu verbessern.
-5. Debugging und Testen
-Um das Problem besser zu verstehen, könnte es hilfreich sein, das Skript mit einem reduzierten Datensatz zu testen, der näher an der Größe der vollständigen Daten liegt, aber klein genug ist, um das Problem zu isolieren und zu debuggen.
-
-Lösungsansatz:
-Teile die vollständige Datendatei in kleinere Stücke und führe das Skript schrittweise aus, um zu sehen, ab welchem Punkt das Problem auftritt.
