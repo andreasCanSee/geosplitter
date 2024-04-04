@@ -1,16 +1,16 @@
 # GeoSplitter
 
 ## Überblick
-GeoSplitter ist ein Python-Tool, um große GeoJSON-Dateien in kleinere, handhabbare Segmente aufzuteilen. Dies ist besonders nützlich für die Verbesserung der Ladezeiten und Effizienz bei der Arbeit mit umfangreichen geographischen Daten in Webanwendungen oder GIS-Projekten. Zusätzlich generiert GeoSplitter eine JSON-Karte, die jedes Segment mit einem spezifischen Koordinatenbereich verknüpft, um eine einfache Integration und Nutzung der segmentierten Daten zu ermöglichen.
+GeoSplitter ist ein Python-Tool, um große GeoJSON-Dateien in kleinere, handhabbare Segmente aufzuteilen. Dies ist besonders nützlich, um die Ladezeiten und Effizienz bei der Arbeit mit umfangreichen geographischen Daten in Webanwendungen oder GIS-Projekten zu verbessern. Zusätzlich generiert GeoSplitter eine JSON-Karte, die jedes Segment mit einem spezifischen Koordinatenbereich verknüpft, um eine einfache Integration und Nutzung der segmentierten Daten zu ermöglichen.
 
 ## Voraussetzungen
 
-Bevor Sie GeoSplitter verwenden, stellen Sie sicher, dass Python 3.x auf Ihrem System installiert ist und folgende Pakete verfügbar sind:
+Bevor du GeoSplitter verwendest, stelle sicher, dass Python 3.x auf deinem System installiert ist und folgende Pakete verfügbar sind:
 
 - Geopandas: Eine Erweiterung für Pandas, um räumliche Daten einfach zu handhaben.
 - Shapely: Für geometrische Operationen innerhalb der Python-Umgebung.
 
-Diese Abhängigkeiten können durch die Installation der `requirements.txt` Datei eingebunden werden, die im Projekt enthalten ist. 
+Diese Abhängigkeiten kannst du durch die Installation der `requirements.txt` Datei einbinden, die im Projekt enthalten ist.
 
 ## Einrichtung
 
@@ -34,4 +34,3 @@ Die `requirements.txt` enthält alle notwendigen Python-Pakete, einschließlich:
 3. **Ausführen des Skripts:** Starte das Skript, um die GeoJSON-Datei zu segmentieren und die JSON-Karte zu generieren.
 
 Das Ergebnis sind mehrere kleinere GeoJSON-Dateien im `segments`-Ordner und eine `map.json`, die die Segmentdateien mit den Koordinatenbereichen verknüpft.
-
