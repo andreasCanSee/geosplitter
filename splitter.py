@@ -5,18 +5,18 @@ from shapely.geometry import box
 
 # Definiert Pfade für Eingabe- und Ausgabedaten sowie Basispfad der Ausführung
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_PATH = os.path.join(BASE_DIR, 'data', 'trees-test.geojson')
+DATA_PATH = os.path.join(BASE_DIR, 'data', 'clean_trees.geojson')
 SEGMENTS_DIR = os.path.join(BASE_DIR, 'segments')
 
 # Festlegen der Anzahl von Segmenten pro Achse im Raster
-GRID_SIZE = 4
+GRID_SIZE = 10
 
 def create_segments(gdf, json_map):
     """
-    Erstellt segmentierte GeoJSON-Dateien basierend auf den definierten Rastersegmenten.
+    Erstellt segmentierte GeoJSON-Dateien basierend auf den definierten Rastersegmenten
     
-    :param gdf: GeoDataFrame der originalen GeoJSON-Daten.
-    :param json_map: Liste von Dictionaries, die Rastersegmente und Dateinamen definieren.
+    :param gdf: GeoDataFrame der originalen GeoJSON-Daten
+    :param json_map: Liste von Dictionaries, die Rastersegmente und Dateinamen definieren
     """
     for segment in json_map:
         # Erstellt eine Bounding Box für das aktuelle Segment
