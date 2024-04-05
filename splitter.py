@@ -18,13 +18,14 @@ def create_filtered_gdf(segment_gdf):
     :param segment_gdf: GeoDataFrame, die die GeoJSON-Daten eines Segments enthält.
     :return: Eine neue GeoDataFrame mit nur den gewünschten Eigenschaften.
     """
+
     # Definiere die gewünschten Eigenschaften
     desired_properties = ['Baumart', 'Kronendurc', 'Standort_N', 'Objekt_Bez']
     
     # Prüfe, welche der gewünschten Eigenschaften in den Daten vorhanden sind
     available_properties = [prop for prop in desired_properties if prop in segment_gdf.columns]
 
-    # Erstelle eine neue GeoDataFrame, die nur die verfügbaren gewünschten Eigenschaften enthält
+    # Filtere die Daten, um nur die gewünschten Eigenschaften und die Geometrie zu behalten
     filtered_data = segment_gdf[available_properties + ['geometry']]
 
     return filtered_data
@@ -52,9 +53,16 @@ def create_segments(gdf, json_map):
                 segment_path = os.path.join(SEGMENTS_DIR, segment["file_name"])
                 filtered_segment_gdf.to_file(segment_path, driver="GeoJSON")
 
+
 def main():
     # Lädt die ursprünglichen GeoJSON-Daten in eine GeoDataFrame
     gdf = gpd.read_file(DATA_PATH)
+
+    # Setze das aktuelle Koordinatensystem, falls es nicht schon gesetzt ist
+    gdf.crs = "EPSG:25832"
+
+    # Transformiere die Koordinaten zu WGS84
+    gdf = gdf.to_crs("EPSG:4326")
 
     # Ermittelt die äußeren Grenzen der GeoDataFrame
     minx, miny, maxx, maxy = gdf.total_bounds
@@ -91,7 +99,7 @@ def main():
     # Speichert die Karte der Segmente als JSON
     map_path = os.path.join(SEGMENTS_DIR, 'map.json')
     with open(map_path, 'w') as f:
-        json.dump(json_map, f, indent=4)
+        json.dump(json_map, f)
 
 if __name__ == '__main__':
     main()
