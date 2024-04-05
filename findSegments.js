@@ -44,12 +44,13 @@ function findMatchingSegments(minX, maxX, minY, maxY) {
     return matchingSegments.map(segment => segment.file_name);
 }
 
-// Beispielaufruf der Funktion mit einem Bildausschnitt.
+// Beispielaufruf der Funktion mit einem Bildausschnitt in WGS84 Koordinaten.
 const exampleViewport = {
-    minX: 466481.52728271484375,
-    maxX: 468481.52728271484375,
-    minY: 5764147.25830078125,
-    maxY: 5864147.25830078125
+    // Angenommene WGS84 Koordinaten für den Bildausschnitt
+    minX: 8.5, // Minimale Länge (Longitude)
+    maxX: 8.52, // Maximale Länge (Longitude)
+    minY: 52, // Minimale Breite (Latitude)
+    maxY: 52.2  // Maximale Breite (Latitude)
 };
 
 // Ermittle die passenden Dateinamen basierend auf dem Beispiel-Bildausschnitt.
