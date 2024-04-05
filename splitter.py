@@ -11,6 +11,25 @@ SEGMENTS_DIR = os.path.join(BASE_DIR, 'segments')
 # Festlegen der Anzahl von Segmenten pro Achse im Raster
 GRID_SIZE = 10
 
+def create_filtered_gdf(segment_gdf):
+    """
+    Erstellt eine gefilterte GeoDataFrame, die nur die spezifizierten Eigenschaften enthält.
+    
+    :param segment_gdf: GeoDataFrame, die die GeoJSON-Daten eines Segments enthält.
+    :return: Eine neue GeoDataFrame mit nur den gewünschten Eigenschaften.
+    """
+    # Definiere die gewünschten Eigenschaften
+    desired_properties = ['Baumart', 'Kronendurc', 'Standort_N', 'Objekt_Bez']
+    
+    # Prüfe, welche der gewünschten Eigenschaften in den Daten vorhanden sind
+    available_properties = [prop for prop in desired_properties if prop in segment_gdf.columns]
+
+    # Erstelle eine neue GeoDataFrame, die nur die verfügbaren gewünschten Eigenschaften enthält
+    filtered_data = segment_gdf[available_properties + ['geometry']]
+
+    return filtered_data
+
+
 def create_segments(gdf, json_map):
     """
     Erstellt segmentierte GeoJSON-Dateien basierend auf den definierten Rastersegmenten
@@ -24,10 +43,14 @@ def create_segments(gdf, json_map):
         # Selektiert Features, die sich innerhalb der Bounding Box befinden
         segment_gdf = gdf[gdf.intersects(bbox)]
         
-        # Speichert das Segment als GeoJSON, wenn es Features enthält
+        # Filtere und behalte nur die gewünschten Eigenschaften
         if not segment_gdf.empty:
-            segment_path = os.path.join(SEGMENTS_DIR, segment["file_name"])
-            segment_gdf.to_file(segment_path, driver="GeoJSON")
+            filtered_segment_gdf = create_filtered_gdf(segment_gdf)
+            
+            # Speichert das gefilterte Segment als GeoJSON, wenn es Features enthält
+            if not filtered_segment_gdf.empty:
+                segment_path = os.path.join(SEGMENTS_DIR, segment["file_name"])
+                filtered_segment_gdf.to_file(segment_path, driver="GeoJSON")
 
 def main():
     # Lädt die ursprünglichen GeoJSON-Daten in eine GeoDataFrame
